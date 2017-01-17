@@ -14,7 +14,9 @@ public class PointerClicker : MonoBehaviour {
 
 	public float ExtensionDist;
 
-	public float Z_RayAngle;
+	public float Z_Angle;
+
+	public bool GENpos,ATTpos,PASpos;
 
 	// Use this for initialization
 	void Start () {
@@ -27,31 +29,57 @@ public class PointerClicker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Z_RayAngle = Vector3.Angle (CursorDistFromMSSC,MSSCPos_Screen) * Mathf.Deg2Rad;
+		AngleUpdater ();
 
 		CursorPosUpdater ();
 		CursorIsClose ();
 
-
-		//Debug.Log (Vector3.Angle (CursorDistFromMSSC,MSSCPos_Screen));
-		Debug.DrawRay (Vector3.zero, Quaternion.EulerAngles(0.0f,0.0f,Z_RayAngle)*Vector3.right*100.0f, Color.green);
 	}
 
 	void CursorPosUpdater(){
 		MSSCPos_Screen = camera.WorldToScreenPoint (new Vector3 (MainSpaceSCTrans.position.x,MainSpaceSCTrans.position.y,0.0f));
 		CursorDistFromMSSC = new Vector3(Input.mousePosition.x,Input.mousePosition.y,0.0f) - MSSCPos_Screen;
 	}
+
 	void CursorIsClose(){
 		if (CursorDistFromMSSC.magnitude <= ExtensionDist) {
-			if (CursorDistFromMSSC.y >= 0.0f) {
-
-				Debug.Log ("Es North!!");
+			if (Z_Angle >= 30 && Z_Angle < 150) {
+				//Debug.Log ("I_H8_My_Generation Faction");
+				GENpos = true;
 			} else {
-				//Z_RayAngle = -Z_RayAngle;
-				Debug.Log("Ayy es south!!");
-			
+				GENpos = false;
 			}
+			if (Z_Angle >= 150 && Z_Angle < 270) {
+				//Debug.Log("TRIGGERED Faction");
+				ATTpos = true;
+			} else {
+				ATTpos = false;
+			}
+			if (Z_Angle >= 270 || Z_Angle < 30) {
+				//Debug.Log ("pASSive Faction");
+				PASpos = true;
+			} else {
+				PASpos = false;
+			}
+		} else {
+			GENpos = false;
+			ATTpos = false;
+			PASpos = false;
 		}
+	}
+
+	void AngleUpdater(){
+		float angleRad = Mathf.Atan2 (CursorDistFromMSSC.y, CursorDistFromMSSC.x);
+
+		Debug.DrawRay (Vector3.zero, Quaternion.EulerAngles(0.0f,0.0f,angleRad)*Vector3.right*100.0f, Color.green);
+
+		Z_Angle = angleRad * Mathf.Rad2Deg;
+		if (Z_Angle < 0) {
+			Z_Angle += 360;
+		}
+		//float angleDegrees 
+	
+	
 	
 	}
 }
