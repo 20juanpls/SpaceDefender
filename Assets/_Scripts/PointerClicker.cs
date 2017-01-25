@@ -9,8 +9,8 @@ public class PointerClicker : MonoBehaviour {
 	//GameObject MainSpaceStationCenter;
 	Transform MainSpaceSCTrans;
 
-	Vector3 MSSCPos_Screen;
-	Vector3 CursorDistFromMSSC;
+	Vector3 MSSCOrigPos;
+	Vector3 CursorToWorld, CursorToDistance;
 
 	public float ExtensionDist;
 
@@ -37,12 +37,14 @@ public class PointerClicker : MonoBehaviour {
 	}
 
 	void CursorPosUpdater(){
-		MSSCPos_Screen = camera.WorldToScreenPoint (new Vector3 (MainSpaceSCTrans.position.x,MainSpaceSCTrans.position.y,0.0f));
-		CursorDistFromMSSC = new Vector3(Input.mousePosition.x,Input.mousePosition.y,0.0f) - MSSCPos_Screen;
+		MSSCOrigPos = new Vector3 (MainSpaceSCTrans.position.x,MainSpaceSCTrans.position.y,0.0f);
+		CursorToWorld = Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x,Input.mousePosition.y,0.0f));
+		CursorToDistance = new Vector3(CursorToWorld.x,CursorToWorld.y,0.0f) - MSSCOrigPos;
 	}
 
 	void CursorIsClose(){
-		if (CursorDistFromMSSC.magnitude <= ExtensionDist) {
+		
+		if (CursorToDistance.magnitude <= ExtensionDist) {
 			if (Z_Angle >= 30 && Z_Angle < 150) {
 				//Debug.Log ("I_H8_My_Generation Faction");
 				GENpos = true;
@@ -69,8 +71,9 @@ public class PointerClicker : MonoBehaviour {
 	}
 
 	void AngleUpdater(){
-		float angleRad = Mathf.Atan2 (CursorDistFromMSSC.y, CursorDistFromMSSC.x);
+		float angleRad = Mathf.Atan2 (CursorToDistance.y, CursorToDistance.x);
 
+		//TheDrawRay
 		Debug.DrawRay (Vector3.zero, Quaternion.EulerAngles(0.0f,0.0f,angleRad)*Vector3.right*100.0f, Color.green);
 
 		Z_Angle = angleRad * Mathf.Rad2Deg;

@@ -19,7 +19,12 @@ public class AreaSpriteControler : MonoBehaviour {
 	void Update () {
 		extensionDist = PClick.ExtensionDist;
 
-		ThisArea.localScale = OrigScale *(extensionDist/ (Camera.main.orthographicSize * 2.0f));
+		//ThisArea.localScale = OrigScale *(extensionDist/ (Camera.main.orthographicSize * 2.0f));
+
+		//float height = Camera.main.orthographicSize * 2;
+		//float width = height * Screen.width/ Screen.height;
+
+		ThisArea.localScale = Vector3.one * extensionDist*0.2f;
 
 	}
 }
