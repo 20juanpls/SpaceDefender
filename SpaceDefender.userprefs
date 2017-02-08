@@ -5,7 +5,8 @@
       <File FileName="Assets/_Scripts/AreaSpriteControler.cs" Line="1" Column="1" />
       <File FileName="Assets/_Scripts/PointerClicker.cs" Line="1" Column="1" />
       <File FileName="Assets/_Scripts/AreaHudManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Camera_Script.cs" Line="1" Column="1" />
+      <File FileName="Assets/Camera_Script.cs" Line="54" Column="4" />
+      <File FileName="../DJB-Game/Assets/Scripts/Canvas_Scripts/HeartContainer_Script.cs" Line="27" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
