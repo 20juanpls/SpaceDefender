@@ -16,6 +16,8 @@ public class Camera_Script : MonoBehaviour {
 
 	float FinalZoom, CurrentZoom, OrigZoom;
 
+	public bool ChangingLv;
+
 	private bool ZoomIn, ZoomOut;
 	// Use this for initialization
 	void Start () {
@@ -50,6 +52,8 @@ public class Camera_Script : MonoBehaviour {
 
 		ZoomActivator ();
 		CamZoomSetter ();
+
+		//Debug.Log ("Changing?: "+ChangingLv);
 
 	}
 
@@ -89,11 +93,14 @@ public class Camera_Script : MonoBehaviour {
 	}
 
 	void ZoomUpgrade(){
-		if (Input.GetKeyDown (KeyCode.L) && FieldOfView_LV < DistArr.Count -1 ) {
+		if (Input.GetKeyDown (KeyCode.L) && FieldOfView_LV < DistArr.Count - 1) {
 			FieldOfView_LV++;
-		}
-		if (Input.GetKeyDown (KeyCode.K) && FieldOfView_LV > 1) {
+			ChangingLv = true;
+		} else if (Input.GetKeyDown (KeyCode.K) && FieldOfView_LV > 1) {
 			FieldOfView_LV--;
+			ChangingLv = true;
+		} else {
+			ChangingLv = false;
 		}
 
 		if (ZoomStep > FieldOfView_LV) {
