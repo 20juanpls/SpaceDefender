@@ -80,15 +80,7 @@ public class Camera_Script : MonoBehaviour {
 	}
 
 	void CamZoomSetter(){
-		if (CurrentZoom != FinalZoom){
-			if (CurrentZoom < FinalZoom) {
-				CurrentZoom += (ZoomSpeed * Time.deltaTime);
-			}
-			if (CurrentZoom > FinalZoom) {
-				CurrentZoom -= (ZoomSpeed * Time.deltaTime);
-			}
-		}
-
+		CurrentZoom = Mathf.MoveTowards (CurrentZoom, FinalZoom, ZoomSpeed * Time.deltaTime);
 		cam.orthographicSize = CurrentZoom;
 	}
 

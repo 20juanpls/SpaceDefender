@@ -74,7 +74,7 @@ public class PointerClicker : MonoBehaviour {
 		float angleRad = Mathf.Atan2 (CursorToDistance.y, CursorToDistance.x);
 
 		//TheDrawRay
-		Debug.DrawRay (Vector3.zero, Quaternion.EulerAngles(0.0f,0.0f,angleRad)*Vector3.right*100.0f, Color.green);
+		//Debug.DrawRay (Vector3.zero, Quaternion.EulerAngles(0.0f,0.0f,angleRad)*Vector3.right*100.0f, Color.green);
 
 		Z_Angle = angleRad * Mathf.Rad2Deg;
 		if (Z_Angle < 0) {
