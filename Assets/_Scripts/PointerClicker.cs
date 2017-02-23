@@ -10,7 +10,7 @@ public class PointerClicker : MonoBehaviour {
 	Transform MainSpaceSCTrans;
 
 	Vector3 MSSCOrigPos;
-	Vector3 CursorToWorld, CursorToDistance;
+	public Vector3 CursorToWorld, CursorToDistance;
 
 	public float ExtensionDist;
 

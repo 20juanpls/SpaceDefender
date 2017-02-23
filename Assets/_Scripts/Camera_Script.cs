@@ -19,6 +19,9 @@ public class Camera_Script : MonoBehaviour {
 	public bool ChangingLv;
 
 	private bool ZoomIn, ZoomOut;
+
+	public ArrayList GenMods;
+
 	// Use this for initialization
 	void Start () {
 		if (DistArr == null) {

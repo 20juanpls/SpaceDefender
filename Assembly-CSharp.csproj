@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ModDistanceMeasurer.cs" />
      <Compile Include="Assets\_Scripts\AreaHudManager.cs" />
      <Compile Include="Assets\_Scripts\AreaSpriteControler.cs" />
      <Compile Include="Assets\_Scripts\Camera_Script.cs" />
