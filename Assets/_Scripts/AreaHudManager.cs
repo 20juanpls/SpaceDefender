@@ -16,9 +16,12 @@ public class AreaHudManager : MonoBehaviour {
 
 	PointerClicker PClick;
 
-	Vector3 OrigImgPos, OrigScale, ChangeScale;
+	Vector3 OrigImgPos, OrigScale, SmallerScale;
 
 	public float HudSpeed = 10.0f;
+
+	public bool LockedIn = false;
+	bool IsSet, ClickedStasis;
 
 	// Use this for initialization
 	void Start () {
@@ -45,47 +48,86 @@ public class AreaHudManager : MonoBehaviour {
 		_PAS.GetComponent<RectTransform> ().anchoredPosition = OrigImgPos;
 		_GEN.GetComponent<RectTransform> ().anchoredPosition = OrigImgPos;
 
+		OrigScale = _ATT.GetComponent<RectTransform> ().localScale;
+		SmallerScale = OrigScale * 0.7f;
+
+		_ATT.GetComponent<RectTransform> ().localScale = SmallerScale;
+		_PAS.GetComponent<RectTransform> ().localScale = SmallerScale;
+		_GEN.GetComponent<RectTransform> ().localScale = SmallerScale;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		ClickToLock ();
+
 		//Change Later ...
-		//ScaleChanger ();
+		ScaleChanger ();
 
-		if (PClick.GENpos == true) {
-			//GENHud.enabled = true;
-			_GEN.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_GEN.GetComponent<RectTransform>().anchoredPosition, Vector3.zero, HudSpeed);
+		if (ClickedStasis == true && IsSet == true) {
+			LockedIn = true;
 		} else {
-			_GEN.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_GEN.GetComponent<RectTransform>().anchoredPosition,OrigImgPos , HudSpeed);
-			//GENHud.enabled = false;
+			LockedIn = false;
 		}
 
-		if (PClick.ATTpos == true) {
-			_ATT.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_ATT.GetComponent<RectTransform>().anchoredPosition, Vector3.zero, HudSpeed);
-		} else {
-			_ATT.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_ATT.GetComponent<RectTransform>().anchoredPosition, OrigImgPos, HudSpeed);
+
+		if (LockedIn == false) {
+			if (PClick.GENpos == true) {
+				//GENHud.enabled = true;
+				_GEN.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_GEN.GetComponent<RectTransform> ().anchoredPosition, Vector3.zero, HudSpeed);
+			} else {
+				_GEN.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_GEN.GetComponent<RectTransform> ().anchoredPosition, OrigImgPos, HudSpeed);
+				//GENHud.enabled = false;
+			}
+
+			if (PClick.ATTpos == true) {
+				_ATT.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_ATT.GetComponent<RectTransform> ().anchoredPosition, Vector3.zero, HudSpeed);
+			} else {
+				_ATT.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_ATT.GetComponent<RectTransform> ().anchoredPosition, OrigImgPos, HudSpeed);
+			}
+
+			if (PClick.PASpos == true) {
+				_PAS.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_PAS.GetComponent<RectTransform> ().anchoredPosition, Vector3.zero, HudSpeed);
+			} else {
+				//PASHud.enabled = false;
+				_PAS.GetComponent<RectTransform> ().anchoredPosition = Vector3.MoveTowards (_PAS.GetComponent<RectTransform> ().anchoredPosition, OrigImgPos, HudSpeed);
+			}
 		}
 
-		if (PClick.PASpos == true) {
-			_PAS.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_PAS.GetComponent<RectTransform>().anchoredPosition, Vector3.zero, HudSpeed);
+		if (_GEN.GetComponent<RectTransform> ().anchoredPosition == Vector2.zero||_ATT.GetComponent<RectTransform> ().anchoredPosition == Vector2.zero||_PAS.GetComponent<RectTransform> ().anchoredPosition == Vector2.zero) {
+			IsSet = true;
+			//Debug.Log ("Is it set?");
 		} else {
-			//PASHud.enabled = false;
-			_PAS.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(_PAS.GetComponent<RectTransform>().anchoredPosition,OrigImgPos , HudSpeed);
+			IsSet = false;
 		}
 	
 	}
 
 	void ScaleChanger(){
-		float height = Camera.main.orthographicSize * 2.0f;
-		float width = height * Screen.width / Screen.height;
-		//OrigScale = new Vector3(width, height, 0.0f);
-		OrigScale = new Vector3(camera.orthographicSize/2* (Screen.width/Screen.height),camera.orthographicSize/2,0.0f);
-		//Debug.Log (width);
-
-		_ATT.GetComponent<RectTransform> ().localScale = OrigScale;
-		_PAS.GetComponent<RectTransform> ().localScale = OrigScale;
-		_GEN.GetComponent<RectTransform> ().localScale = OrigScale;
+		if (LockedIn == true) {
+			if (PClick.GENpos == true) {
+				_GEN.GetComponent<RectTransform> ().localScale = OrigScale;
+			} else if (PClick.ATTpos == true) {
+				_ATT.GetComponent<RectTransform> ().localScale = OrigScale;
+			} else if (PClick.PASpos == true) {
+				_PAS.GetComponent<RectTransform> ().localScale = OrigScale;
+			} 
+		} else {
+			_ATT.GetComponent<RectTransform> ().localScale = SmallerScale;
+			_PAS.GetComponent<RectTransform> ().localScale = SmallerScale;
+			_GEN.GetComponent<RectTransform> ().localScale = SmallerScale;
+		}
+	}
+	void ClickToLock(){
+		if (ClickedStasis == false) {
+			if (Input.GetMouseButtonDown (0)) {
+				ClickedStasis = true;
+			}
+		} else if (ClickedStasis == true) {
+			if (Input.GetMouseButtonDown (0)) {
+				ClickedStasis = false;
+			}
+		}				
 	}
 }
