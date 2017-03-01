@@ -19,10 +19,10 @@ public class ModDistanceMeasurer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		distanceToCursor = Vector3.Magnitude (thePointer.CursorToDistance - thisPlanePos);
-		if (distanceToCursor <= 1.0f) {
+		/*if (distanceToCursor <= 1.0f) {
 			this.GetComponent<MeshRenderer> ().enabled = true;
 		} else {
 			this.GetComponent<MeshRenderer> ().enabled = false;
-		}
+		}*/
 	}
 }

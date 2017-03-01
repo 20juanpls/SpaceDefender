@@ -6,6 +6,7 @@ public class PointerClicker : MonoBehaviour {
 
 	GameObject cam;
 	Camera camera;
+	AreaHudManager AHudM;
 	//GameObject MainSpaceStationCenter;
 	Transform MainSpaceSCTrans;
 
@@ -21,6 +22,7 @@ public class PointerClicker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//MainSpaceStationCenter = GameObject.FindGameObjectWithTag ("");
+		AHudM = GameObject.Find ("Sub_AreaSwitch Canvas").GetComponent<AreaHudManager> ();
 		cam = GameObject.FindGameObjectWithTag("MainCamera");
 		camera = cam.GetComponent<Camera>();
 		MainSpaceSCTrans = GameObject.FindGameObjectWithTag("MSSC_model").GetComponent<Transform>();
@@ -44,7 +46,7 @@ public class PointerClicker : MonoBehaviour {
 
 	void CursorIsClose(){
 		
-		if (CursorToDistance.magnitude <= ExtensionDist) {
+		if (CursorToDistance.magnitude <= ExtensionDist && AHudM.LockedIn == false) {
 			if (Z_Angle >= 30 && Z_Angle < 150) {
 				//Debug.Log ("I_H8_My_Generation Faction");
 				GENpos = true;
@@ -63,7 +65,7 @@ public class PointerClicker : MonoBehaviour {
 			} else {
 				PASpos = false;
 			}
-		} else {
+		} else if (CursorToDistance.magnitude >= ExtensionDist && AHudM.LockedIn == false) {
 			GENpos = false;
 			ATTpos = false;
 			PASpos = false;

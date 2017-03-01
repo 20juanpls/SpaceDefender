@@ -108,9 +108,12 @@ public class AreaHudManager : MonoBehaviour {
 		if (LockedIn == true) {
 			if (PClick.GENpos == true) {
 				_GEN.GetComponent<RectTransform> ().localScale = OrigScale;
+				//Debug.Log("gen is locked");
 			} else if (PClick.ATTpos == true) {
 				_ATT.GetComponent<RectTransform> ().localScale = OrigScale;
+				//Debug.Log ("Att is locked");
 			} else if (PClick.PASpos == true) {
+				//Debug.Log ("Pas is locked");
 				_PAS.GetComponent<RectTransform> ().localScale = OrigScale;
 			} 
 		} else {
