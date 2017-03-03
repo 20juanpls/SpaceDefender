@@ -9,6 +9,8 @@ public class ModDistanceMeasurer : MonoBehaviour {
 	public Vector3 thisPlanePos;
 
 	public float distanceToCursor;
+
+	public bool ClickedD;
 	// Use this for initialization
 	void Start () {
 		thePointer = GameObject.FindGameObjectWithTag ("CursorManager").GetComponent<PointerClicker> ();
@@ -19,10 +21,11 @@ public class ModDistanceMeasurer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		distanceToCursor = Vector3.Magnitude (thePointer.CursorToDistance - thisPlanePos);
-		/*if (distanceToCursor <= 1.0f) {
-			this.GetComponent<MeshRenderer> ().enabled = true;
+
+		if (distanceToCursor <= 0.5f && Input.GetMouseButtonDown (0)) {
+			ClickedD = true;
 		} else {
-			this.GetComponent<MeshRenderer> ().enabled = false;
-		}*/
+			ClickedD = false;
+		}
 	}
 }

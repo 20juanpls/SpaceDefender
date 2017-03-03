@@ -46,12 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ModDistanceMeasurer.cs" />
      <Compile Include="Assets\_Scripts\AreaHudManager.cs" />
      <Compile Include="Assets\_Scripts\AreaSpriteControler.cs" />
      <Compile Include="Assets\_Scripts\Camera_Script.cs" />
-     <Compile Include="Assets\_Scripts\ModuleManager.cs" />
+     <Compile Include="Assets\_Scripts\ModDistanceMeasurer.cs" />
      <Compile Include="Assets\_Scripts\ModulesScripts\GenMod_Script.cs" />
+     <Compile Include="Assets\_Scripts\ModulesScripts\ModConnecterRenderer.cs" />
+     <Compile Include="Assets\_Scripts\ModulesScripts\ModuleManager.cs" />
      <Compile Include="Assets\_Scripts\ParticleEffectsScript\ScaleManagerScript.cs" />
      <Compile Include="Assets\_Scripts\PointerClicker.cs" />
      <Compile Include="Assets\_Scripts\ZoomLightScript.cs" />

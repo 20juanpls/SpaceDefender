@@ -84,8 +84,11 @@ public class ModuleManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+
 		CheckingModAdder ();
 
+		ModDestroyer ();
 		//ModIdentifier ();
 
 
@@ -126,6 +129,17 @@ public class ModuleManager : MonoBehaviour {
 				if (tee.GetComponent<MeshRenderer> ().enabled == false) {
 					tee.GetComponent<MeshRenderer> ().enabled = true;
 					break;
+				}
+			}
+		}
+	}
+
+	void ModDestroyer(){
+		if (Input.GetKey(KeyCode.S)) {
+			for (int i = 0; i < AllModules.Count; i++) {
+				GameObject ModDes = (GameObject)AllModules [i];
+				if (ModDes.GetComponent<ModDistanceMeasurer> ().ClickedD == true) {
+					ModDes.GetComponent<MeshRenderer> ().enabled = false;
 				}
 			}
 		}
