@@ -64,7 +64,7 @@ public class ModConnecterRenderer : MonoBehaviour {
 		}
 
 		GameObject tempMod = (GameObject)theModList [IDnum];
-		if (tempMod.GetComponent<MeshRenderer> ().enabled == true) {
+		if (tempMod.activeSelf/*GetComponent<MeshRenderer> ().enabled*/ == true) {
 			return true;
 		} else {
 			return false;

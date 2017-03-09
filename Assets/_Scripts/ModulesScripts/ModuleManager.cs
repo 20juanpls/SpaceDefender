@@ -122,12 +122,12 @@ public class ModuleManager : MonoBehaviour {
 
 	}
 
-	void EnablingModRenderer(ArrayList tehList){
+	public void EnablingModRenderer(ArrayList tehList){
 		if (Input.GetKeyDown (KeyCode.A)) {
 			for(int i = 0; i < tehList.Count; i ++){
 				GameObject tee = (GameObject)tehList [i];
-				if (tee.GetComponent<MeshRenderer> ().enabled == false) {
-					tee.GetComponent<MeshRenderer> ().enabled = true;
+				if (tee.activeSelf == false) {
+					tee.SetActive(true);
 					break;
 				}
 			}
@@ -139,7 +139,7 @@ public class ModuleManager : MonoBehaviour {
 			for (int i = 0; i < AllModules.Count; i++) {
 				GameObject ModDes = (GameObject)AllModules [i];
 				if (ModDes.GetComponent<ModDistanceMeasurer> ().ClickedD == true) {
-					ModDes.GetComponent<MeshRenderer> ().enabled = false;
+					ModDes.SetActive(false);
 				}
 			}
 		}
@@ -148,7 +148,7 @@ public class ModuleManager : MonoBehaviour {
 	void ModIdentifier(){
 		for (int i = 0; i < AllModules.Count; i++){
 			GameObject TempMod = (GameObject)AllModules [i];
-			if (TempMod.GetComponent<MeshRenderer> ().enabled == true ) {
+			if (TempMod.activeSelf == true ) {
 				if (TempMod.tag == "GeneratorMod") {
 					modNum = CompareModToList (GenModList, TempMod);
 				} else if (TempMod.tag == "PassiveMod") {
@@ -166,9 +166,10 @@ public class ModuleManager : MonoBehaviour {
 			GameObject GenTemp = (GameObject)GenModList [i];
 			GameObject PasTemp = (GameObject)PasModList [i];
 			GameObject AtkTemp = (GameObject)AtkModList [i];
-			GenTemp.GetComponent<MeshRenderer>().enabled = false;
-			PasTemp.GetComponent<MeshRenderer>().enabled = false;
-			AtkTemp.GetComponent<MeshRenderer>().enabled = false;
+			GenTemp.SetActive(false);
+			PasTemp.SetActive(false);
+			AtkTemp.SetActive(false);
+
 		}
 	}
 }

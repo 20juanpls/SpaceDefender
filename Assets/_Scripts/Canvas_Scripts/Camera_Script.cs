@@ -5,11 +5,12 @@ using System.Collections;
 public class Camera_Script : MonoBehaviour {
 	Camera cam;
 	public GameObject ZoomHud;
+	ModuleManager ModManGer;
 
 	public int FieldOfView_LV,ZoomStep;
 
 	public float ZoomSpeed = 2.0f, TimeInterval = 1.0f;
-	public float ZoomD_0, ZoomD_1, ZoomD_2, ZoomD_3, ZoomD_4, ZoomD_5;
+	public float ZoomD_0, ZoomD_1, ZoomD_2, ZoomD_3, ZoomD_4;//, ZoomD_5;
 
 	//public float[] DistArr = new float[5];
 	public ArrayList DistArr;
@@ -29,6 +30,8 @@ public class Camera_Script : MonoBehaviour {
 		}
 
 		ZoomHud = GameObject.Find("ZoomButtonsCanvas");
+		ModManGer = GameObject.Find("SpaceStationComponents").GetComponent<ModuleManager> ();
+
 		AssignZoomButtons ();
 			
 		cam = this.GetComponent<Camera> ();
@@ -44,7 +47,7 @@ public class Camera_Script : MonoBehaviour {
 		DistArr.Add (ZoomD_2);
 		DistArr.Add (ZoomD_3);
 		DistArr.Add (ZoomD_4);
-		DistArr.Add (ZoomD_5);
+		//DistArr.Add (ZoomD_5);
 	}
 	
 	// Update is called once per frame

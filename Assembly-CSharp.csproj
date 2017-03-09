@@ -60,6 +60,7 @@
      <Compile Include="Assets\_Scripts\ModulesScripts\ModuleManager.cs" />
      <Compile Include="Assets\_Scripts\NPC_Scripts\NPC_FollowScript.cs" />
      <Compile Include="Assets\_Scripts\ParticleEffectsScript\ScaleManagerScript.cs" />
+     <Compile Include="Assets\_Scripts\Satellite_Scripts\SatelliteManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
