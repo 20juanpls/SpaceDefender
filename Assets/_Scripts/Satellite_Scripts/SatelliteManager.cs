@@ -11,9 +11,15 @@ public class SatelliteManager : MonoBehaviour {
 	GameObject AtkSatFolder;
 	GameObject PasSatFolder;
 
-	public ArrayList PasSatList;
+    GameObject leadingSat_L1;
+    float leadAngle_L1;
+
+    bool canEnableP, canEnableA;
+
+    public ArrayList PasSatList;
 	public ArrayList AtkSatList;
 	public ArrayList AllSatelites;
+
 	// Use this for initialization
 	void Start () {
 		if (AllSatelites == null) {
@@ -26,11 +32,7 @@ public class SatelliteManager : MonoBehaviour {
 			AtkSatList = new ArrayList ();
 		}
 
-
-
-
-
-		//PasSatFolder = GameObject.Find ("PassiveSatellites"); -- not yeet
+		PasSatFolder = GameObject.Find ("PassiveSatellites");
 		AtkSatFolder = GameObject.Find ("AttackSatellites");
 
 
@@ -40,13 +42,13 @@ public class SatelliteManager : MonoBehaviour {
 
 		for (int i = 0; i < AtkSatFolder.transform.childCount; i ++){
 			AtkSatList.Add (AtkSatFolder.transform.GetChild (i).gameObject);
-			//PasSatList.Add (PasSatFolder.transform.GetChild (i).gameObject);
+			PasSatList.Add (PasSatFolder.transform.GetChild (i).gameObject);
 		}
 
 		for (int i = 0; i < AtkSatList.Count; i++) {
-			//GameObject PasTemp = (GameObject)PasSatList [i];
+			GameObject PasTemp = (GameObject)PasSatList [i];
 			GameObject AtkTemp = (GameObject)AtkSatList [i];
-			//AllSatelites.Add (PasTemp);
+			AllSatelites.Add (PasTemp);
 			AllSatelites.Add (AtkTemp);
 		}
 
@@ -61,17 +63,35 @@ public class SatelliteManager : MonoBehaviour {
 
 		SatDestroyer ();
 
-	}
+
+    }
 
 	void CheckSatAdder(){
 		if (AHudM.LockedIn == true) {
-			if (PClick.ATTpos == true && CheckLatestMod (ModManGer.AtkModList) == true) {
-				//Debug.Log("u can add Atk");
-				ModManGer.EnablingModRenderer (AtkSatList);
-			} else if (PClick.PASpos == true) {
-				//Debug.Log("u can add Pas");
-				ModManGer.EnablingModRenderer (PasSatList);
-			}
+            if (canEnableP == true) {
+                SatRendEnabler(PasSatList);
+            }
+            if (canEnableA == true) {
+                SatRendEnabler(AtkSatList);
+            }
+
+            if (PClick.ATTpos == true && CheckLatestMod(ModManGer.AtkModList) == true)
+            {
+                //Debug.Log("u can add Atk");
+                canEnableA = true;
+            }
+            else {
+                canEnableA = false;
+            }
+
+            if (PClick.PASpos == true && CheckLatestMod(ModManGer.PasModList) == true)
+            {
+                //Debug.Log("u can add Pas");
+                canEnableP = true;
+            }
+            else {
+                canEnableP = false;
+            }
 		}
 	}
 
@@ -85,24 +105,52 @@ public class SatelliteManager : MonoBehaviour {
 		}
 	}
 
-	void SatDestroyer(){
+    void SatRendEnabler(ArrayList tehList) {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            for (int i = 0; i < tehList.Count; i++)
+            {
+                GameObject tee = (GameObject)tehList[i];
+                if (tee.GetComponent<MeshRenderer>().enabled == false)
+                {
+                    tee.GetComponent<MeshRenderer>().enabled = true;
+                    OrderItsChildren(tee, true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    void SatDestroyer(){
 		if (Input.GetKey(KeyCode.S)) {
 			for (int i = 0; i < AllSatelites.Count; i++) {
 				GameObject ModDes = (GameObject)AllSatelites [i];
 				if (ModDes.GetComponent<ModDistanceMeasurer> ().ClickedD == true) {
-					ModDes.SetActive(false);
-				}
+                    ModDes.GetComponent<MeshRenderer>().enabled = false;
+                    OrderItsChildren(ModDes, false);
+                }
 			}
 		}
 	}
 
 	void ResetAllSat(){
 		for (int i = 0; i < AtkSatList.Count; i++) {
-			//GameObject PasTemp = (GameObject)PasSatList [i];
+			GameObject PasTemp = (GameObject)PasSatList [i];
 			GameObject AtkTemp = (GameObject)AtkSatList [i];
-			//PasTemp.SetActive(false);
-			AtkTemp.SetActive(false);
+            PasTemp.GetComponent<MeshRenderer>().enabled = false;
+            OrderItsChildren(PasTemp, false);
+            AtkTemp.GetComponent<MeshRenderer>().enabled = false;
+            OrderItsChildren(AtkTemp, false);
 
-		}
+        }
 	}
+
+    void OrderItsChildren( GameObject tehParent, bool OnorOff) {
+        for (int i = 0; i < tehParent.transform.childCount; i++) {
+            tehParent.transform.GetChild(i).gameObject.SetActive(OnorOff);
+        }
+
+    }
+
 }
